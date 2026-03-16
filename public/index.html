@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Míster FC</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>"/>
+</head>
+<body>
+
+<!-- LOBBY -->
+<div id="lobby">
+  <div style="text-align:center;margin-bottom:32px">
+    <div class="lobby-logo">Míster FC</div>
+    <div class="lobby-sub">Série A · B · C · D · Copa do Brasil 2026</div>
+  </div>
+  <div class="lobby-form">
+    <div id="lobby-err" class="banner"></div>
+    <div class="card" style="margin-bottom:12px">
+      <label class="label">Seu nome</label>
+      <input class="inp" id="inp-name" placeholder="Ex: Técnico João" maxlength="24"/>
+      <label class="label">Seu time</label>
+      <select class="inp" id="inp-team">
+        <option>Estrela FC</option><option>Dragões SC</option><option>Leões FC</option>
+        <option>Falcões EC</option><option>Tubarões SC</option><option>Águias FC</option>
+        <option>Trovões SC</option><option>Cobras EC</option>
+      </select>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <label class="label">Criar nova liga</label>
+      <input class="inp" id="inp-lname" placeholder="Nome da liga"/>
+      <label class="label">Divisão inicial</label>
+      <select class="inp" id="inp-div"></select>
+      <div style="font-size:11px;color:var(--t3);margin-bottom:10px">
+        Jogue o campeonato E a Copa do Brasil simultaneamente!<br>
+        Elenco inicial adaptado à força da divisão escolhida.
+      </div>
+      <button class="btn green full" onclick="createLeague()">⚽ Criar liga</button>
+    </div>
+    <div class="divider"><hr/><span>ou entre em uma liga</span><hr/></div>
+    <div class="card">
+      <label class="label">Código da liga</label>
+      <input class="inp" id="inp-code" placeholder="MSTR-XXXX" maxlength="9"
+        oninput="this.value=this.value.toUpperCase()"/>
+      <button class="btn full" onclick="joinLeague()">Entrar na liga</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <div class="topbar">
+    <div>
+      <div class="topbar-logo">⚽ Míster FC</div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:2px">
+        <span class="topbar-team" id="tb-team"></span>
+        <span style="color:var(--t3);font-size:10px">·</span>
+        <span class="topbar-info" id="tb-info"></span>
+      </div>
+    </div>
+    <button class="btn sm" onclick="logout()" style="color:var(--t3)">Sair</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn" data-tab="home"     onclick="goTab('home')">Início</button>
+    <button class="tab-btn" data-tab="match"    onclick="goTab('match')">Campeonato</button>
+    <button class="tab-btn" data-tab="copa"     onclick="goTab('copa')">🏆 Copa</button>
+    <button class="tab-btn" data-tab="division" onclick="goTab('division')">Classificação</button>
+    <button class="tab-btn" data-tab="squad"    onclick="goTab('squad')">Elenco</button>
+    <button class="tab-btn" data-tab="tactics"  onclick="goTab('tactics')">Tática</button>
+    <button class="tab-btn" data-tab="market"   onclick="goTab('market')">Mercado</button>
+    <button class="tab-btn" data-tab="history"  onclick="goTab('history')">Histórico</button>
+    <button class="tab-btn" data-tab="chat"     onclick="goTab('chat')">Chat</button>
+  </div>
+
+  <div class="content">
+    <div id="s-home"     class="screen on"><div id="home-body"></div></div>
+    <div id="s-match"    class="screen"><div id="match-body"></div></div>
+    <div id="s-copa"     class="screen"><div id="copa-body"></div></div>
+    <div id="s-division" class="screen"><div id="division-body"></div></div>
+    <div id="s-squad"    class="screen"><div id="squad-body"></div></div>
+    <div id="s-tactics"  class="screen"><div id="tactics-body"></div></div>
+    <div id="s-market"   class="screen"><div id="market-body"></div></div>
+    <div id="s-history"  class="screen"><div id="history-body"></div></div>
+    <div id="s-chat"     class="screen"><div id="chat-body"></div></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="font-family:var(--fh);font-size:18px;font-weight:900" id="modal-title"></div>
+      <button onclick="closeModal()" style="background:none;border:none;color:var(--t3);font-size:22px;cursor:pointer;line-height:1">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- SPINNER -->
+<div id="overlay" class="overlay">
+  <div class="loading">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+  <div id="overlay-msg" style="font-size:13px;color:var(--t2);margin-top:14px"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
